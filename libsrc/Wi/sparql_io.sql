@@ -3922,6 +3922,9 @@ again:
   ) nresults := dict_size (rset[0][0]);
   if (nresults > -1 and nresults >= maxrows)
     http_header (http_header_get () || sprintf ('X-SPARQL-MaxRows: %d\r\n', maxrows));
+  http_header (http_header_get () || sprintf ('X-martin-nresults: %d\r\n', nresults));
+  if (1 = length (rset))
+    http_header (http_header_get () || sprintf ('X-martin-first-result-length: %d\r\n', length (rset[0])));
   -- dbg_obj_princ ('exec metas=', metas, ', state=', state, ', msg=', msg);
   if (state = '00000')
     goto write_results;
